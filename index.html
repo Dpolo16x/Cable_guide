@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CableGuide — Categorías de Cable UTP</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="app-header">
+    <h1>Cable<span>Guide</span></h1>
+    <p>Guía interactiva de categorías de cable estructurado · Ingeniería de Sistemas</p>
+    <div class="header-badges">
+      <span class="hbadge">Cat 5e</span>
+      <span class="hbadge">Cat 6</span>
+      <span class="hbadge">Cat 6A</span>
+      <span class="hbadge">Cat 7</span>
+      <span class="hbadge">Cat 8</span>
+      <span class="hbadge">TIA/EIA-568</span>
+    </div>
+  </header>
+
+  <!-- ── NAVEGACIÓN ─────────────────────────────────────── -->
+  <nav class="app-nav" role="navigation" aria-label="Módulos de la aplicación">
+    <button class="nav-btn activo" data-seccion="catalogo">📋 Catálogo</button>
+    <button class="nav-btn" data-seccion="comparador">📊 Comparador</button>
+    <button class="nav-btn" data-seccion="recomendador">🔍 Recomendador</button>
+    <button class="nav-btn" data-seccion="quiz">🧠 Quiz</button>
+  </nav>
+
+  <!-- ── CONTENIDO PRINCIPAL ────────────────────────────── -->
+  <main class="app-main">
+
+    <!-- ── CATÁLOGO ─────────────────────────────────────── -->
+    <section id="sec-catalogo" class="seccion activa" aria-label="Catálogo de cables">
+      <h2 class="seccion-titulo">// Catálogo de categorías</h2>
+      <p class="seccion-desc">
+        Explora las especificaciones técnicas de cada categoría. Haz clic en <strong>Ver detalles</strong>
+        para ver ventajas, desventajas y aplicaciones recomendadas.
+      </p>
+      <div id="catalogo-cables" role="list" aria-label="Tarjetas de categorías de cable"></div>
+    </section>
+
+    <!-- ── COMPARADOR ───────────────────────────────────── -->
+    <section id="sec-comparador" class="seccion" aria-label="Comparador de categorías">
+      <h2 class="seccion-titulo">// Comparador interactivo</h2>
+      <p class="seccion-desc">
+        Selecciona las categorías que quieres comparar. La celda destacada con ★
+        indica el mejor valor para cada criterio.
+      </p>
+      <div class="comparador-controles">
+        <div id="selector-cables" role="group" aria-label="Selección de categorías"></div>
+        <button id="btn-comparar" class="btn-primary" aria-label="Ejecutar comparación">Comparar</button>
+      </div>
+      <p id="comparador-error" class="msg-error" role="alert"></p>
+      <div class="tabla-scroll">
+        <div id="tabla-comparacion" role="region" aria-live="polite" aria-label="Tabla de comparación"></div>
+      </div>
+    </section>
+
+    <!-- ── RECOMENDADOR ─────────────────────────────────── -->
+    <section id="sec-recomendador" class="seccion" aria-label="Recomendador de cable">
+      <h2 class="seccion-titulo">// Recomendador inteligente</h2>
+      <p class="seccion-desc">
+        Ingresa los requisitos de tu instalación y el sistema recomendará la
+        categoría más costo-efectiva que los satisfaga.
+      </p>
+      <div class="form-recomendador">
+        <div class="form-grupo">
+          <label for="inp-velocidad">Velocidad requerida (Gbps)</label>
+          <input type="number" id="inp-velocidad" min="0.1" max="40" step="0.1"
+                 value="1" placeholder="Ej: 1" aria-describedby="hint-vel" />
+          <small id="hint-vel" style="color:var(--text-dim);font-size:.7rem">
+            Valores típicos: 1, 10, 25, 40
+          </small>
+        </div>
+        <div class="form-grupo">
+          <label for="inp-distancia">Distancia del tendido (m)</label>
+          <input type="number" id="inp-distancia" min="1" max="100" step="1"
+                 value="50" placeholder="Ej: 50" aria-describedby="hint-dist" />
+          <small id="hint-dist" style="color:var(--text-dim);font-size:.7rem">
+            Máximo 100 m para cableado horizontal
+          </small>
+        </div>
+        <div class="form-grupo">
+          <label for="sel-entorno">Entorno de instalación</label>
+          <select id="sel-entorno">
+            <option value="hogar">Hogar / Residencial</option>
+            <option value="empresa">Empresa / Oficina</option>
+            <option value="datacenter">Centro de datos</option>
+          </select>
+        </div>
+        <div class="form-grupo form-grupo-btn">
+          <button id="btn-recomendar" class="btn-primary">Recomendar →</button>
+        </div>
+      </div>
+      <div id="resultado-recomendacion" role="region" aria-live="polite" aria-label="Resultado de la recomendación"></div>
+    </section>
+
+    <!-- ── QUIZ ─────────────────────────────────────────── -->
+    <section id="sec-quiz" class="seccion" aria-label="Quiz de conocimiento">
+      <h2 class="seccion-titulo">// Quiz de conocimiento</h2>
+      <p class="seccion-desc">
+        7 preguntas sobre categorías de cable, velocidades, normativas y aplicaciones.
+        Pon a prueba lo que sabes.
+      </p>
+      <div class="quiz-wrapper">
+        <div id="quiz-area" role="region" aria-live="polite"></div>
+        <div id="resultado-quiz"></div>
+        <button id="btn-quiz-reset" style="display:none">↺ Reiniciar quiz</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── MODAL DETALLE ────────────────────────────────────── -->
+  <div id="modal-detalle" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal-box">
+      <button id="modal-cerrar" aria-label="Cerrar modal">✕</button>
+      <div id="modal-cuerpo"></div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ───────────────────────────────────────────── -->
+  <footer class="app-footer">
+    CableGuide · Redes y Cableado Estructurado · Ingeniería de Sistemas · 2025
+  </footer>
+
+  <!-- ── SCRIPTS (orden de carga: datos → lógica → presentación) ── -->
+  <script src="js/datos.js"></script>
+  <script src="js/logica.js"></script>
+  <script src="js/presentacion.js"></script>
+
+</body>
+</html>
